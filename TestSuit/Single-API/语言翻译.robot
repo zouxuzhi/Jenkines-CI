@@ -28,3 +28,8 @@ Resource          ../../Vars/常用参数.robot
     ${resuqlt}    语言翻译    晴天
     log    翻译前内容为：${resuqlt}[text]---------------- 翻译后的内容为：${resuqlt}[tst]
     codeAssert    ${resuqlt}[text]    晴天
+
+中翻英示例6
+    ${resuqlt}    语言翻译    雨天
+    log    翻译前内容为：${resuqlt}[text]---------------- 翻译后的内容为：${resuqlt}[tst]
+    codeAssert    ${resuqlt}[text]    雨天

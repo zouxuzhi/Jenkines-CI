@@ -1,0 +1,47 @@
+*** Settings ***
+Library           DatabaseLibrary
+Library           requests
+Library           RequestsLibrary
+Library           Collections
+
+*** Keywords ***
+Http-Get
+    [Arguments]    ${url}    ${uri}    ${data}    ${code}    ${timeout}=2
+    [Documentation]    zxz
+    [Timeout]    ${timeout}
+    Create Session    urlName    ${url}    #verify=cacert.pem
+    ${headers1}=    Create Dictionary    Content-type=application/json;charset=UTF-8
+    log    -------------------------------------------------
+    log    入参为：${data}
+    log    -------------------------------------------------
+    ${resp}    Get Request    urlName    uri=${uri}    params=${data}    headers=${headers1}    timeout=2
+    Should Be Equal As Strings    ${resp.status_code}    200
+    ${respData}    To Json    ${resp.content}
+    log    -------------------------------------------------
+    log    出参为：${respData}
+    log    -------------------------------------------------
+    Comment    ${item}    Get Dictionary Items    ${respData}    #取出Json的item
+    Comment    ${keys}    Get Dictionary Keys    ${respData}    #取出Json的key
+    Comment    ${value}    Get Dictionary Values    ${respData}    #取出Json的value
+    [Return]    ${respData}    # 返回json串
+
+Http-Post
+    [Arguments]    ${url}    ${path}    ${data}    ${code}    ${timeout}=2
+    [Documentation]    参数命名规范
+    ...    url ：请求的主uri
+    ...    path：接口地址
+    ...    data：传递的参数
+    ...    value：校验接口返回值
+    [Timeout]    ${timeout}
+    ${header}    Create Dictionary    Content-type=application/json;charset=UTF-8
+    Create Session    postApi    ${url}    ${header}
+    log    -------------------------------------------------
+    log    入参为：${data}
+    log    -------------------------------------------------
+    ${response}    Post Request    postApi    ${path}    data=${data}    timeout=2
+    Should Be Equal As Strings    ${response.status_code}    200
+    ${res}    To Json    ${response.content}
+    log    -------------------------------------------------
+    log    出参为：${res} \
+    log    -------------------------------------------------
+    [Return]    ${res}

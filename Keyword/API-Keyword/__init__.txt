@@ -1,0 +1,11 @@
+*** Settings ***
+Resource          ../Public-Keyword/HttpClient.txt
+Resource          ../../Vars/常用参数.robot
+
+*** Keywords ***
+根据地区查询未来15天天气
+    log    广州天气预报查询
+    ${Api_Key}    Create Dictionary    8AZJ3zh1755e291c5a9e334a099ea16c67b2702a6a123b5
+    ${Area_Data}    Create Dictionary    广州市
+    ${Result}    Http-Get    ${url}    ${Weather_Url}    ${Api_Key}&${Area_Data}    200
+    log    ${Result}

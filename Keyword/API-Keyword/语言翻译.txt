@@ -1,0 +1,14 @@
+*** Settings ***
+Resource          ../Public-Keyword/HttpClient.txt
+Resource          ../../Vars/常用参数.robot
+
+*** Variables ***
+
+*** Keywords ***
+语言翻译
+    [Arguments]    ${input_text}
+    log    根据中文翻译成英文
+    ${baseData}    Create Dictionary    text=${input_text}
+    ${Result}    Http-Get    ${url_api}    ${Language_Url}    ${baseData}    200
+    log    ${Result}
+    [Return]    ${Result}
